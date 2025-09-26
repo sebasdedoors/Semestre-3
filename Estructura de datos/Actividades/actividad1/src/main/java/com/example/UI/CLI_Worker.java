@@ -1,151 +1,159 @@
 package com.example.UI;
 
 import java.util.*;
-
 import com.example.data.Task;
 import com.example.process.WorkerManager;
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.*;
+import com.example.process.*;
 
 public class CLI_Worker {
-    private WorkerManager workerManager = new WorkerManager();
-    private Scanner scanner = new Scanner(System.in);
+    public void loginWorker(){
+        WorkerManager workerManager = new WorkerManager();
 
-    public void start(){
-        String command;
-        do {
-            System.out.println("");
-            menu();
-            System.out.println("");
-            System.out.print("Ingrese su opción: ");
-            command = scanner.nextLine();
-            switch (command) {
-                case "1":
-                    addTask();
-                    break;
-                case "2":
-                    removeTask();
-                    break;
-                case "3":
-                    showTask();
-                    break;
-                case "4":
-                    System.out.println("Gracias por su labor del día.");
-                    break;
-                default:
-                    System.out.println("Opción no válida, intente de nuevo.");
-                    break;
+        JFrame frame = new JFrame("Inicio");
+        frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+
+        Font fontGrande = new Font("Arial", Font.BOLD, 30);
+        Font fontTitulo = new Font("Arial", Font.PLAIN, 25);
+        Font fontNormal = new Font("Arial", Font.PLAIN, 15);
+
+        JLabel label = new JLabel("CINEMANIA");
+        label.setBounds(110, 20, 300, 30);
+        label.setFont(fontGrande);
+        label.setForeground(Color.white);
+        frame.add(label);
+
+        JLabel label2 = new JLabel("Trabajador");
+        label2.setBounds(280, 90, 300, 30);
+        label2.setFont(fontTitulo);
+        label2.setForeground(Color.BLACK);
+        frame.add(label2);
+
+        JPanel panel2 = new JPanel(null);
+        panel2.setBounds(0, 0, 90, 600);
+        panel2.setBackground(Color.red);
+        frame.add(panel2);
+
+        JPanel panel = new JPanel(null);
+        panel.setBounds(0,0,600,70);
+        panel.setBackground(Color.blue);
+        frame.add(panel);
+
+        JLabel labelUser = new JLabel("Usuario:");
+        labelUser.setBounds(135, 125, 100, 30);
+        labelUser.setForeground(Color.black);
+        frame.add(labelUser);
+
+        JLabel labelId = new JLabel("ID:");
+        labelId.setBounds(170, 160, 100, 30);
+        labelId.setForeground(Color.black);
+        frame.add(labelId);
+
+        JLabel labelDepar = new JLabel("Departamento:");
+        labelDepar.setBounds(100, 195, 100, 30);
+        labelDepar.setForeground(Color.BLACK);
+        frame.add(labelDepar);
+
+        JTextField user = new JTextField();
+        user.setBounds(195, 132, 100, 20);
+        frame.add(user);
+
+        JTextField idField = new JTextField();
+        idField.setBounds(195, 167, 100, 20);
+        frame.add(idField);
+
+        JTextField deparField = new JTextField();
+        deparField.setBounds(195, 201, 100, 20);
+        frame.add(deparField);
+
+        JButton botonAceptar = new JButton("Aceptar");
+        botonAceptar.setBounds(300, 250, 100, 30);
+        frame.add(botonAceptar);
+
+        JButton botonReg = new JButton("Registrarse");
+        botonReg.setBounds(170, 250, 110, 30);
+        frame.add(botonReg);
+
+        JButton botonAdmin = new JButton("Admin");
+        botonAdmin.setBounds(5, 90, 80, 25);
+        panel2.add(botonAdmin);
+        
+        JButton botonUser = new JButton("User");
+        botonUser.setBounds(5, 180, 80, 25);
+        panel2.add(botonUser);
+
+        JButton botonWorker = new JButton("Worker");
+        botonWorker.setBounds(5, 270, 80, 25);
+        panel2.add(botonWorker);
+
+        botonAceptar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = user.getText();
+                String idText = idField.getText();
+                String departmentText = deparField.getText();
+
+                if (username.isEmpty() || idText.isEmpty() || departmentText.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacios.");
+                } else {
+                    int id = Integer.parseInt(idText);
+                    int department = Integer.parseInt(departmentText);
+                    if (id <= 0 || (department <= 0 && department >= 3)) {
+                        JOptionPane.showMessageDialog(frame, "ID o departamento invalido.");
+                    } else {
+                        if (!workerManager.login(username, department, id)) {
+                            JOptionPane.showMessageDialog(frame, "Usuario no encontrado.");
+                        } else {
+                            frame.dispose();
+                            //windowWorker();
+                        }
+                    }
+
+                }
             }
+        });
 
-        } while (!command.equals("4"));
-    }
+        botonReg.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = user.getText();
+                String idText = idField.getText();
+                String departmentText = deparField.getText();
 
-    public void menu(){
-        System.out.println("+---------------------------------+");
-        System.out.println("|          Bienvenido             |");
-        System.out.println("+---------------------------------+");
-        System.out.println("");
-        System.out.println("+-----------------------------------+");
-        System.out.println("|      Seleccione una opción.       |");
-        System.out.println("| 1. Añadir tarea.                  |");
-        System.out.println("| 2. Remover tarea.                 |");
-        System.out.println("| 3. Mostrar tareas segun prioridad.|");
-        System.out.println("| 4. Cerrar sesión.                 |");
-        System.out.println("+-----------------------------------+");
-    }
+                if (username.isEmpty() || idText.isEmpty() || departmentText.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacios.");
+                }else {
+                    int id = Integer.parseInt(idText);
+                    int department = Integer.parseInt(departmentText);
+                    
+                    if (id <= 0 || (department <= 0 && department >= 3)) {
+                        JOptionPane.showMessageDialog(frame, "El ID o departamento son invalidos.");
+                    } else {
+                        workerManager.addWorker(username, department, id);
+                        JOptionPane.showMessageDialog(frame, "Usuario registrado exitosamente.");
+                    }
+                }
+            }
+        });
 
-    private void addTask(){
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|         Añadir tarea.         |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|        Ingrese la tarea.      |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        String description = scanner.nextLine();
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|    Ingrese su departamento.   |");
-        System.out.println("| 1. Finanzas.                  |");
-        System.out.println("| 2. Inventario.                |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        int department = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|   Ingrese el ID de la tarea.  |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("");
-        System.out.println("+---------------------------------+");
-        System.out.println("|  Ingrese el nivel de prioridad. |");
-        System.out.println("| 1. Alta.                        |");
-        System.out.println("| 2. Media.                       |");
-        System.out.println("| 3. Baja.                        |");
-        System.out.println("+---------------------------------+");
-        System.out.println("");
-        int priority = scanner.nextInt();
-        scanner.nextLine();
-        workerManager.addTask(description, department, id, priority);
-    }
+        botonAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CLI cli = new CLI();
+                cli.loginAdmin();
+            }
+        });
 
-    private void removeTask(){
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|         Remover tarea.        |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|    Ingrese su departamento.   |");
-        System.out.println("| 1. Finanzas.                  |");
-        System.out.println("| 2. Inventario.                |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        int department = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|   Ingrese el ID de la tarea.  |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        workerManager.removeTask(department, id);
-    }
+        botonUser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CLI_Client cli_Client = new CLI_Client();
+                cli_Client.loginUser();
+            }
+        });
 
-    private void showTask(){
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|       Mostrar tareas.         |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        System.out.println("+-------------------------------+");
-        System.out.println("|    Ingrese su departamento.   |");
-        System.out.println("| 1. Finanzas.                  |");
-        System.out.println("| 2. Inventario.                |");
-        System.out.println("+-------------------------------+");
-        System.out.println("");
-        int department = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("");
-        System.out.println("+---------------------------------+");
-        System.out.println("|  Ingrese el nivel de prioridad. |");
-        System.out.println("| 1. Alta.                        |");
-        System.out.println("| 2. Media.                       |");
-        System.out.println("| 3. Baja.                        |");
-        System.out.println("+---------------------------------+");
-        System.out.println("");
-        int priority = scanner.nextInt();
-        scanner.nextLine();
-        for (Task task : workerManager.viewTasks(department, priority)){
-            System.out.println("+-----------------------------+");
-            System.out.println("| ID: " + task.getId() + "      |");
-            System.out.println("| Descripción: " + task.getDescription() + " |");
-            System.out.println("| Prioridad: " + task.getPriority() + "        |");
-            System.out.println("+-----------------------------+");
-        }           
+        frame.setVisible(true);
     }
 }

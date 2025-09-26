@@ -28,7 +28,7 @@ public class CLI_Login {
                     clientLogin();
                     break;
                 case "3":
-                    cli.start();
+                    //cli.start();
                     break;
                 case "4":
                     System.out.println("Gracias por visitarnos.");
@@ -82,9 +82,9 @@ public class CLI_Login {
             workerManager.addWorker(name, department, id);
             System.out.println("");
             System.out.println("Has sido registrado con exito.");
-            cliWorker.start();
+            //cliWorker.start();
         }
-        cliWorker.start();
+        //cliWorker.start();
     }
 
     private void clientLogin(){
@@ -107,8 +107,8 @@ public class CLI_Login {
             clientManager.addClient(name, password);
             System.out.println("");
             System.out.println("Listo, has sido registrado con exito.");
-            cliClient.start();
+            //cliClient.start();
         }
-        cliClient.start();
+        //cliClient.start();
     }
 }

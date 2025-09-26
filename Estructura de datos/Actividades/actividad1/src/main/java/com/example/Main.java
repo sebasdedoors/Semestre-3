@@ -4,7 +4,7 @@ import com.example.UI.*;
 public class Main {
     /*corre el programa  */
     public static void main(String[] args) {
-        CLI_Login cli_Login = new CLI_Login();
-        cli_Login.start();
+        CLI2 cli2 = new CLI2();
+        cli2.window();
     }
 }
