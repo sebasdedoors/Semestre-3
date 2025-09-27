@@ -22,10 +22,10 @@ public class CLI_Client {
     Font fontTitulo = new Font("Monospaced", Font.BOLD, 25);
     Font fontNormal = new Font("Arial", Font.PLAIN, 15);
 
-    Color fondoPrincipal = Color.decode("#1e1e2f");
+    Color fondoPrincipal = Color.decode("#000000");
     Color panelLateral = Color.decode("#2c2c3c");
     Color encabezado = Color.decode("#ff4757");
-    Color boton = Color.decode("#3742fa");
+    Color boton = Color.decode("#DAA520");
     Color texto = Color.decode("#ffffff");
 
     public void loginUser(){
