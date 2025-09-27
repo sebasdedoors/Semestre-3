@@ -5,7 +5,6 @@ import com.example.process.Manager;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import java.util.List;
 
 import com.example.data.Peliculas;
 
@@ -277,7 +277,7 @@ public class CLI {
                                                 }
                                             }
                                         } catch (Exception a) {
-                                            JOptionPane.showMessageDialog(frame, a);
+                                            JOptionPane.showMessageDialog(frame, "Algo ha ocurrido, intentalo de nuevo.");
                                             windowAdmin();
                                         }
                                     }
@@ -289,11 +289,152 @@ public class CLI {
             }
         });
 
-        frame.setVisible(true);
-    }
+        botonEliminar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(labelBien);
+                frame.repaint();
 
-    public static void main(String[] args) {
-        CLI cli = new CLI();
-        cli.windowAdmin();
+                JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
+                panelAux.setBackground(Color.LIGHT_GRAY);
+
+                JLabel nameText = new JLabel("Titulo de la película.");
+                nameText.setForeground(Color.BLACK);
+                nameText.setFont(fontTitulo);
+                nameText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JTextField name = new JTextField(20);
+                name.setMaximumSize(name.getPreferredSize());
+                name.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JButton siguiente = new JButton("Eliminar");
+                siguiente.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                panelAux.add(Box.createVerticalStrut(50));
+                panelAux.add(nameText);
+                panelAux.add(Box.createVerticalStrut(20));
+                panelAux.add(name);
+                panelAux.add(Box.createVerticalStrut(20));
+                panelAux.add(siguiente);
+
+                frame.add(panelAux, BorderLayout.CENTER);
+
+                frame.revalidate();
+                frame.repaint();
+
+                siguiente.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            String namE = name.getText();
+
+                            if (namE.isEmpty()) {
+                                JOptionPane.showMessageDialog(frame, "El campo no puede estar vacio.");
+                                windowAdmin();
+                            } else {
+                                if (manager.deletePelicula(namE)) {
+                                    JOptionPane.showMessageDialog(frame, "Pelicula borrada con exito.");
+                                    windowAdmin();
+                                }
+                            }
+                        } catch (Exception a) {
+                            JOptionPane.showMessageDialog(frame, "Algo ocurrio mal, intentalo de nuevo.");
+                            windowAdmin();
+                        }
+                    }
+                });
+            }
+        });
+
+        botonMostrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(labelBien);
+                frame.repaint();
+
+                JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
+                panelAux.setBackground(Color.LIGHT_GRAY);
+
+                JLabel generText = new JLabel("Género por buscar.");
+                generText.setForeground(Color.BLACK);
+                generText.setFont(fontTitulo);
+                generText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JTextField gener = new JTextField(20);
+                gener.setMaximumSize(gener.getPreferredSize());
+                gener.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JButton siguiente = new JButton("Buscar.");
+                siguiente.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                panelAux.add(Box.createVerticalStrut(50));
+                panelAux.add(generText);
+                panelAux.add(Box.createVerticalStrut(20));
+                panelAux.add(gener);
+                panelAux.add(Box.createVerticalStrut(20));
+                panelAux.add(siguiente);
+
+                frame.add(panelAux, BorderLayout.CENTER);
+
+                frame.revalidate();
+                frame.repaint();
+
+                siguiente.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            frame.remove(panelAux);
+                            frame.repaint();
+
+                            String geneR = gener.getText();
+
+                            if (geneR.isEmpty()) {
+                                JOptionPane.showMessageDialog(frame, "El campo no puede estar vacio.");
+                                windowAdmin();
+                            } else {
+                                List<Peliculas> lista = manager.showPeliculas(geneR);
+
+                                if (lista.isEmpty()) {
+                                    JOptionPane.showMessageDialog(frame, "Género no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                                    windowAdmin();
+                                } else {
+
+                                JTextArea area = new JTextArea();
+                                area.setEditable(false);
+
+                                StringBuilder sb = new StringBuilder();
+                                for (Peliculas p : lista) {
+                                    sb.append("Titulo: ").append(p.getTitulo()).append("\n");
+                                    sb.append("Género: ").append(p.getGenero()).append("\n");
+                                    sb.append("Año: ").append(p.getAño()).append("\n");
+                                    sb.append("----------------------------\n");
+                                }
+                                area.setText(sb.toString());
+
+                                JScrollPane scroll = new JScrollPane(area);
+                                scroll.setPreferredSize(new Dimension(400, 200));
+
+                                JOptionPane.showMessageDialog(frame, scroll, "Listado de películas de género " + geneR, JOptionPane.INFORMATION_MESSAGE);
+                                windowAdmin();
+                            }}
+                        } catch (Exception a) {
+                            JOptionPane.showMessageDialog(frame, "Algo ha ocurrido mal, intentalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                            windowAdmin();
+                        }
+                    }
+                });
+            }
+        });
+
+        botonSalir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(frame, "¿Desea cerrar sesión?", "Cierre de sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    frame.dispose();
+                    loginAdmin();
+                }
+            }
+        });
+
+        frame.setVisible(true);
     }
 }

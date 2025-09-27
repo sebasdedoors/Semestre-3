@@ -35,12 +35,12 @@ public class Manager {
         return peliculasPorGenero;
     }
 
-    public void deletePelicula(String titulo){
+    public boolean deletePelicula(String titulo){
         if(titulo.equalsIgnoreCase(titulo) == peliculas.containsKey(titulo)){
             peliculas.remove(titulo);
-            System.out.println("Pelicula eliminada: " + titulo);
+            return true;
         }else{
-            System.out.println("Pelicula no encontrada");
+            return false;
         }
 
     }
