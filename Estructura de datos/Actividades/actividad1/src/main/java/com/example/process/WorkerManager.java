@@ -16,12 +16,15 @@ public class WorkerManager{
         workers.put(2311, new Worker("Daniela", 2, 2311));
     }
 
-    public void addTask(String description, int department, int id, int priority){
+    public boolean addTask(String description, int department, int id, int priority){
         if (department == 1) {
             tasksFinance.put(id, new Task(id, description, priority));
+            return true;
         }else if (department == 2) {
             tasksInventory.put(id, new Task(id, description, priority));
+            return true;
         }
+        return false;
     }
 
     public boolean login(String name, int department, int id){
@@ -48,21 +51,23 @@ public class WorkerManager{
         }
     }
 
-    public void removeTask(int department, int id){
+    public boolean removeTask(int department, int id){
         if (department == 1) {
             if (tasksFinance.containsKey(id)) {
                 tasksFinance.remove(id);
+                return true;
             }else {
-                System.out.println("Tarea no encontrada.");
+                return false;
             }
         }else if (department == 2) {
             if (tasksInventory.containsKey(id)) {
                 tasksInventory.remove(id);
+                return true;
             }else {
-                System.out.println("Tarea no encontrada.");
+                return false;
             }
         }else {
-            System.out.println("Departamento no encontrado.");
+            return false;
         }
     }
 

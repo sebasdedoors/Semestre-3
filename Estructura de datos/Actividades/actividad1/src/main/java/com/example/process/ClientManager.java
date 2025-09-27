@@ -25,27 +25,28 @@ public class ClientManager {
         return false;
     }
 
-    public void addToCart(String titulo){
+    public boolean addToCart(String titulo){
         for (Peliculas pelicula : manager.peliculas.values()){
             if (pelicula.getTitulo().equalsIgnoreCase(titulo)){
                 cart.add(pelicula);
-                System.out.println("Pelicula agregada al carrito: " + pelicula.getTitulo());
-            }
+                return true;
+            } 
         }
+        return false;
     }
 
     public List<Peliculas> viewCart(){
         return cart;
     }
 
-    public void removeFromCart(String titulo){
+    public boolean removeFromCart(String titulo){
         for(Peliculas pelicula : cart){
             if(pelicula.getTitulo().equalsIgnoreCase(titulo)){
                 cart.remove(pelicula);
-                System.out.println("Pelicula: " + pelicula.getTitulo() + " eliminada del carrito.");
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public void addClient(String name, String password){

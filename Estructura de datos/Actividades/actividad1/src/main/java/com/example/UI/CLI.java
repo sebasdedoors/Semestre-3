@@ -3,7 +3,6 @@ package com.example.UI;
 import com.example.process.Manager;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.*;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,55 +26,70 @@ public class CLI {
     Font fontTitulo = new Font("Monospaced", Font.BOLD, 25);
     Font fontNormal = new Font("Arial", Font.PLAIN, 15);
 
+    Color fondoPrincipal = Color.decode("#1e1e2f");
+    Color panelLateral = Color.decode("#2c2c3c");
+    Color encabezado = Color.decode("#ff4757");
+    Color boton = Color.decode("#3742fa");
+    Color texto = Color.decode("#ffffff");
+
     public void loginAdmin(){
         JFrame frame = new JFrame("Inicio");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
-        frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+        frame.getContentPane().setBackground(fondoPrincipal);
 
         JLabel label = new JLabel("CINEMANIA");
         label.setBounds(110, 20, 300, 30);
         label.setFont(fontGrande);
-        label.setForeground(Color.white);
+        label.setForeground(texto);
         frame.add(label);
 
         JLabel label2 = new JLabel("Administrador");
         label2.setBounds(240, 90, 200, 30);
         label2.setFont(fontTitulo);
-        label2.setForeground(Color.black);
+        label2.setForeground(texto);
         frame.add(label2);
 
         JPanel panel2 = new JPanel(null);
         panel2.setBounds(0, 0, 90, 600);
-        panel2.setBackground(Color.red);
+        panel2.setBackground(panelLateral);
         frame.add(panel2);
 
         JPanel panel = new JPanel(null);
         panel.setBounds(0,0,600,70);
-        panel.setBackground(Color.blue);
+        panel.setBackground(encabezado);
         frame.add(panel);
 
         JButton botonAdmin = new JButton("Admin");
         botonAdmin.setBounds(5, 90, 80, 25);
+        botonAdmin.setBackground(boton);
+        botonAdmin.setForeground(texto);
+        botonAdmin.setFocusPainted(false);
         panel2.add(botonAdmin);
         
         JButton botonUser = new JButton("User");
         botonUser.setBounds(5, 180, 80, 25);
+        botonUser.setBackground(boton);
+        botonUser.setForeground(texto);
+        botonUser.setFocusPainted(false);
         panel2.add(botonUser);
 
         JButton botonWorker = new JButton("Worker");
         botonWorker.setBounds(5, 270, 80, 25);
+        botonWorker.setBackground(boton);
+        botonWorker.setForeground(texto);
+        botonWorker.setFocusPainted(false);
         panel2.add(botonWorker);
 
         JLabel labelUser = new JLabel("Usuario:");
         labelUser.setBounds(165, 150, 100, 30);
-        labelUser.setForeground(Color.black);
+        labelUser.setForeground(texto);
         frame.add(labelUser);
 
         JLabel labelPass = new JLabel("Contraseña:");
         labelPass.setBounds(150, 200, 100, 30);
-        labelPass.setForeground(Color.black);
+        labelPass.setForeground(texto);
         frame.add(labelPass);
 
         JTextField user = new JTextField();
@@ -88,6 +102,9 @@ public class CLI {
 
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.setBounds(300, 250, 100, 30);
+        botonAceptar.setBackground(boton);
+        botonAceptar.setForeground(texto);
+        botonAceptar.setFocusPainted(false);
         frame.add(botonAceptar);
 
         botonAceptar.addActionListener(new ActionListener() {
@@ -131,26 +148,39 @@ public class CLI {
         frame.setSize(600, 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+        frame.getContentPane().setBackground(fondoPrincipal);
 
         JLabel labelBien = new JLabel("Bienvenido Administrador.", SwingConstants.CENTER);
         labelBien.setFont(fontGrande);
+        labelBien.setForeground(texto);
         frame.add(labelBien);
 
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelBotones.setBackground(Color.RED);
+        panelBotones.setBackground(encabezado);
 
-        JButton botonAgregar = new JButton("Agregar Películas.");
+        JButton botonAgregar = new JButton("Agregar Películas");
+        botonAgregar.setBackground(boton);
+        botonAgregar.setForeground(texto);
+        botonAgregar.setFocusPainted(false);
         panelBotones.add(botonAgregar);
 
-        JButton botonMostrar = new JButton("Mostrar Películas.");
+        JButton botonMostrar = new JButton("Mostrar Películas");
+        botonMostrar.setBackground(boton);
+        botonMostrar.setForeground(texto);
+        botonMostrar.setFocusPainted(false);
         panelBotones.add(botonMostrar);
 
-        JButton botonEliminar = new JButton("Eliminar Película.");
+        JButton botonEliminar = new JButton("Eliminar Película");
+        botonEliminar.setBackground(boton);
+        botonEliminar.setForeground(texto);
+        botonEliminar.setFocusPainted(false);
         panelBotones.add(botonEliminar);
 
-        JButton botonSalir = new JButton("Cerrar Sesión.");
+        JButton botonSalir = new JButton("Cerrar Sesión");
+        botonSalir.setBackground(boton);
+        botonSalir.setForeground(texto);
+        botonSalir.setFocusPainted(false);
         panelBotones.add(botonSalir);
 
         frame.add(panelBotones, BorderLayout.NORTH);
@@ -162,10 +192,10 @@ public class CLI {
 
                 JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
-                panelAux.setBackground(Color.LIGHT_GRAY);
+                panelAux.setBackground(fondoPrincipal);
 
-                JLabel nameText = new JLabel("Titulo de la película.");
-                nameText.setForeground(Color.BLACK);
+                JLabel nameText = new JLabel("Titulo de la película");
+                nameText.setForeground(texto);
                 nameText.setFont(fontTitulo);
                 nameText.setAlignmentX(Component.CENTER_ALIGNMENT);
                 //
@@ -178,6 +208,9 @@ public class CLI {
 
                 JButton siguiente = new JButton("Siguiente");
                 siguiente.setAlignmentX(Component.CENTER_ALIGNMENT);
+                siguiente.setBackground(boton);
+                siguiente.setForeground(texto);
+                siguiente.setFocusPainted(false);
                 //
 
                 panelAux.add(Box.createVerticalStrut(50));
@@ -199,10 +232,10 @@ public class CLI {
 
                         JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
                         panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
-                        panelAux.setBackground(Color.LIGHT_GRAY);
+                        panelAux.setBackground(fondoPrincipal);
 
-                        JLabel generoText = new JLabel("Género de la pelicula.");
-                        generoText.setForeground(Color.BLACK);
+                        JLabel generoText = new JLabel("Género de la pelicula");
+                        generoText.setForeground(texto);
                         generoText.setFont(fontTitulo);
                         generoText.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -229,19 +262,22 @@ public class CLI {
 
                                 JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
                                 panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
-                                panelAux.setBackground(Color.LIGHT_GRAY);
+                                panelAux.setBackground(fondoPrincipal);
 
-                                JLabel yearText = new JLabel("Año de la pelicula.");
-                                yearText.setForeground(Color.BLACK);
+                                JLabel yearText = new JLabel("Año de la pelicula");
+                                yearText.setForeground(texto);
                                 yearText.setFont(fontTitulo);
                                 yearText.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                                 JTextField year = new JTextField(20);
-                                year.setMaximumSize(gener.getPreferredSize());
+                                year.setMaximumSize(year.getPreferredSize());
                                 year.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                                 JButton agregar = new JButton("Agregar Película");
                                 agregar.setAlignmentX(Component.CENTER_ALIGNMENT);
+                                agregar.setBackground(boton);
+                                agregar.setForeground(texto);
+                                agregar.setFocusPainted(false);
 
                                 panelAux.add(Box.createVerticalStrut(50));
                                 panelAux.add(yearText);
@@ -296,10 +332,10 @@ public class CLI {
 
                 JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
-                panelAux.setBackground(Color.LIGHT_GRAY);
+                panelAux.setBackground(fondoPrincipal);
 
-                JLabel nameText = new JLabel("Titulo de la película.");
-                nameText.setForeground(Color.BLACK);
+                JLabel nameText = new JLabel("Titulo de la película");
+                nameText.setForeground(texto);
                 nameText.setFont(fontTitulo);
                 nameText.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -309,6 +345,9 @@ public class CLI {
 
                 JButton siguiente = new JButton("Eliminar");
                 siguiente.setAlignmentX(Component.CENTER_ALIGNMENT);
+                siguiente.setBackground(boton);
+                siguiente.setForeground(texto);
+                siguiente.setFocusPainted(false);
 
                 panelAux.add(Box.createVerticalStrut(50));
                 panelAux.add(nameText);
@@ -352,10 +391,10 @@ public class CLI {
 
                 JPanel panelAux = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 panelAux.setLayout(new BoxLayout(panelAux, BoxLayout.Y_AXIS));
-                panelAux.setBackground(Color.LIGHT_GRAY);
+                panelAux.setBackground(fondoPrincipal);
 
                 JLabel generText = new JLabel("Género por buscar.");
-                generText.setForeground(Color.BLACK);
+                generText.setForeground(texto);
                 generText.setFont(fontTitulo);
                 generText.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -365,6 +404,9 @@ public class CLI {
 
                 JButton siguiente = new JButton("Buscar.");
                 siguiente.setAlignmentX(Component.CENTER_ALIGNMENT);
+                siguiente.setBackground(boton);
+                siguiente.setForeground(texto);
+                siguiente.setFocusPainted(false);
 
                 panelAux.add(Box.createVerticalStrut(50));
                 panelAux.add(generText);
